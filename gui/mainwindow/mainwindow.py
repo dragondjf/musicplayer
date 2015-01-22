@@ -13,11 +13,13 @@ from gui.uiconfig import windowsoptions
 from gui.menus import SettingsMenu, SkinMenu
 from gui.floatwindows import LogWindow, HistoryWindow
 from gui.floatwindows import InitHistoryWindow, FloatWindow
-from gui.functionpages import FloatPage
+from gui.functionpages import LeftBar, BottomBar
+from gui.dwidgets import DMainWindow, DTitleBar
 from .guimanger import GuiManger
+from gui.uiconfig import constants
 
 
-class MainWindow(FMainWindow):
+class MainWindow(DMainWindow):
 
     viewID = "MainWindow"
 
@@ -37,22 +39,10 @@ class MainWindow(FMainWindow):
 
         self.initMenus()
 
-        self.initTitleBar()
         self.setCentralWidget(QLabel(self))
 
-        self.initDockwindow()
-
         self.initSizeGrip()
-
         self.setSystemTrayMenu(self.settingsMenu)
-
-        self.suspensionWidget = FSuspensionWidget(
-            'gui/skin/images/PFramer.png', self)
-        self.suspensionWidget.setContextMenu(self.settingsMenu)
-        self.suspensionWidget.move(self.frameGeometry().topRight()
-                                   + QPoint(20, 20))
-
-        self.floatWidget = FloatPage(self)
 
     def initSize(self):
         mainwindow = windowsoptions['mainwindow']
@@ -65,92 +55,61 @@ class MainWindow(FMainWindow):
 
     def initMenus(self):
         self.settingsMenu = SettingsMenu(self)
-        self.skinMenu = SkinMenu(self)
-        self.skinMenu.setFixedWidth(100)
 
     def initTitleBar(self):
-        if self.isFtitleBarExisted():
-            self.titleBar().closeButton.setObjectName("close")
-            self.titleBar().settingDownButton.setMenu(self.settingsMenu)
-            self.titleBar().skinButton.setMenu(self.skinMenu)
-            self.initTitleBarMenuConnect()
+        self.titleBar = DTitleBar(self)
+        self.titleBar.settingDownButton.setMenu(self.settingsMenu)
 
-    def initTitleBarMenuConnect(self):
-        self.titleBar().settingMenuShowed.connect(
-            self.titleBar().settingDownButton.showMenu)
-        self.titleBar().skinMenuShowed.connect(
-            self.titleBar().skinButton.showMenu)
-        self.skinMenu.skinIDSin.connect(self.setskin)
+    def initLeftBar(self):
+        self.leftBar = LeftBar(self)
 
-    def initDockwindow(self):
-        self.dockwindows = []
-        # Log
-        self.logwindow = LogWindow(self)
-        self.logfloatwindow = FloatWindow(self.logwindow, self.tr("Log"), self)
-        self.addDockWidget(Qt.BottomDockWidgetArea, self.logfloatwindow)
+    def initBottomBar(self):
+        self.bottomBar = BottomBar(self)
 
-        # History
-        self.historywindow = HistoryWindow(self)
-        self.historyfloatwindow = FloatWindow(
-            self.historywindow, self.tr("Histroy"), self)
-        self.addDockWidget(Qt.BottomDockWidgetArea, self.historyfloatwindow)
+    def setCentralWidget(self, widget):
 
-        # Init History
-        self.initHistorywindow = InitHistoryWindow(parent=self)
-        self.initHistoryFloatwindow = FloatWindow(
-            self.initHistorywindow, self.tr("Init"), self)
-        self.addDockWidget(
-            Qt.BottomDockWidgetArea, self.initHistoryFloatwindow)
+        self.initTitleBar()
+        self.initLeftBar()
+        self.initBottomBar()
 
-        self.logfloatwindow.setFixedHeight(194)
-        self.historyfloatwindow.setFixedHeight(194)
-        self.initHistoryFloatwindow.setFixedHeight(194)
+        centralWidget = QFrame(self)
 
-        self.dockwindows.append(self.logfloatwindow)
-        self.dockwindows.append(self.historyfloatwindow)
-        self.dockwindows.append(self.initHistoryFloatwindow)
-        for dock in self.dockwindows:
-            dock.hide()
+        pageLayout = QVBoxLayout()
+        pageLayout.addWidget(self.titleBar)
+        pageLayout.addWidget(widget)
+        pageLayout.setContentsMargins(0, 0, 0, 0)
+        pageLayout.setSpacing(0)
 
-        self.tabifyDockWidget(self.logfloatwindow, self.historyfloatwindow)
-        self.tabifyDockWidget(
-            self.historyfloatwindow, self.initHistoryFloatwindow)
+        controlLayout = QHBoxLayout()
+        controlLayout.addWidget(self.leftBar)
+        controlLayout.addLayout(pageLayout)
+        controlLayout.setContentsMargins(0, 0, 0, 0)
+        controlLayout.setSpacing(0)
 
-        self.tabbar = self.findChildren(QTabBar)
-        self.tabbar[0].setCurrentIndex(0)
+        mainLayout = QVBoxLayout()
+        mainLayout.addLayout(controlLayout)
+        mainLayout.addWidget(self.bottomBar)
+        mainLayout.setContentsMargins(0, 0, 0, 0)
+        mainLayout.setSpacing(0)
+        centralWidget.setLayout(mainLayout)
+        super(MainWindow, self).setCentralWidget(centralWidget)
 
     def initSizeGrip(self):
         self.sizeGrip = QSizeGrip(self)
-        self.sizeGrip.hide()
+        self.sizeGrip.show()
 
-    def setskin(self, skinID="BB"):
+    def setskin(self, skinID="default"):
         setSkinForApp('gui/skin/qss/%s.qss' % skinID)  # 设置主窗口样式
-
-    def hideEvent(self, event):
-        super(MainWindow, self).hideEvent(event)
-        if hasattr(self, 'floatWidget') and self.floatWidget:
-            if self.floatWidget.titleBar.isPined():
-                self.floatWidget.show()
-            else:
-                self.floatWidget.hide()
-
-    def showEvent(self, event):
-        super(MainWindow, self).showEvent(event)
-        if hasattr(self, 'floatWidget') and self.floatWidget.isShowed:
-            self.floatWidget.show()
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Escape:
-            self.titleBar().closeButton.click()
+            self.guimanger.actionExit()
         elif event.key() == Qt.Key_F11:
-            if self.isFtitleBarExisted():
-                self.titleBar().maxButton.clicked.emit()
+            pass
         elif event.key() == Qt.Key_F9:
             pass
         elif event.key() == Qt.Key_F8:
-            bar = self.statusBar()
-            bar.setVisible(not bar.isVisible())
-            self.sizeGrip.setVisible(not bar.isVisible())
+            pass
         elif event.key() == Qt.Key_F12:
             self.guimanger.actionObjectView()
         else:
@@ -160,32 +119,3 @@ class MainWindow(FMainWindow):
         super(MainWindow, self).resizeEvent(event)
         self.sizeGrip.move(
             self.size().width() - 100, self.size().height() - 30)
-
-    def mouseMoveEvent(self, event):
-        super(MainWindow, self).mouseMoveEvent(event)
-        if hasattr(self, 'floatWidget') and self.floatWidget:
-            if not self.floatWidget.isLocked():
-                self.floatWidget.setGeometry(self.floatWidget.endRect)
-
-    # def closeEvent(self, evt):
-    #     flag, exitflag = dialogs.exit(windowsoptions['exitdialog'])
-    #     if flag:
-    #         for item in exitflag:
-    #             if item == 'minRadio' and exitflag[item]:
-    #                 self.showMinimized()
-    #                 evt.ignore()
-    #             elif item == 'exitRadio' and exitflag[item]:
-    #                 evt.accept()
-    #             elif item == 'exitsaveRadio' and exitflag[item]:
-    #                 evt.accept()
-    #                 self.saveoptions()
-    #                 if not os.path.exists("options"):
-    #                     os.mkdir("options")
-    #                 with open("options\windowsoptions.json", 'w') as f:
-    #                     json.dump(windowsoptions, f, indent=4)
-    #     else:
-    #         evt.ignore()
-
-    def saveoptions(self):
-        from gui.uiconfig import windowsoptions
-        windowsoptions['mainwindow']['maximizedflag'] = self.isMaximized()

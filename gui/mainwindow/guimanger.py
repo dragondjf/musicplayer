@@ -17,26 +17,21 @@ class GuiManger(QObject):
     def __init__(self, parent=None):
         super(GuiManger, self).__init__()
         self.parent = parent
-        self.menuActionConnect()
+        self.titleBarConnect()
         self.settingMenuActionConnect()
         self.createControllers()
-        views['MainWindow'].titleBar().closed.connect(self.actionExit)
-        views['MainWindow'].floatWidget.titleBar.closed.connect(self.updateFloatMenu)
-        # from .rpcapplication import rpcApp
 
-        # for key, p in rpcApp.plugins.items():
-        #     print(key, p.__dict__)
+    def titleBarConnect(self):
+        titleBar = views['MainWindow'].titleBar
+        mainWindow = views['MainWindow']
+        titleBar.settingMenuShowed.connect(
+            titleBar.settingDownButton.showMenu)
+        titleBar.minimized.connect(mainWindow.showMinimized)
+        titleBar.maximized.connect(self.switchWindow)
+        titleBar.closed.connect(self.actionExit)
 
-        rpcs = [{
-            'type': 'show %d' % i,
-            'data': {"show": 'dfdfdfdf', 'text': [i, i, i]}
-        } for i in range(10)]
-
-        signal_DB.uu_initAddBatch.emit(rpcs)
-
-    def menuActionConnect(self):
-        if hasattr(views['MainWindow'].menuBar(), 'qactions'):
-            for name, action in views['MainWindow'].menuBar().qactions.items():
+    def settingMenuActionConnect(self):
+        for name, action in views['MainWindow'].settingsMenu.qactions.items():
                 if hasattr(self, 'action%s' % name):
                     action.triggered.connect(
                         getattr(self, 'action%s' % name)
@@ -46,27 +41,17 @@ class GuiManger(QObject):
                         getattr(self, 'actionNotImplement')
                     )
 
-    def settingMenuActionConnect(self):
-        if views['MainWindow'].isFtitleBarExisted():
-            for name, action in views['MainWindow'].settingsMenu.qactions.items():
-                    if hasattr(self, 'action%s' % name):
-                        action.triggered.connect(
-                            getattr(self, 'action%s' % name)
-                        )
-                    else:
-                        action.triggered.connect(
-                            getattr(self, 'actionNotImplement')
-                        )
-
     def createControllers(self):
         pass
 
-    def actionLogin(self):
-        if hasattr(self, 'loginPage'):
-            self.loginPage.hide()
-            self.loginPage.deleteLater()
-        self.loginPage = LoginPage(views['MainWindow'])
-        self.loginPage.animationShow()
+    def switchWindow(self, flag):
+        mainWindow = views['MainWindow']
+        if flag:
+            mainWindow.showMaximized()
+        else:
+            mainWindow.showNormal()
+
+        mainWindow.setskin()
 
     def actionSuspension(self):
         sw = views['MainWindow'].suspensionWidget
@@ -75,41 +60,6 @@ class GuiManger(QObject):
             self.sender().setText('Hide suspension window')
         else:
             self.sender().setText('Show suspension window')
-
-    def actionFloat(self):
-        sw = views['MainWindow'].floatWidget
-        if sw.isVisible():
-            self.sender().setText('Show float window')
-            sw.animationHide()
-        else:
-            self.sender().setText('Hide float window')
-            sw.animationShow()
-            sw.isShowed = True
-
-    def updateFloatMenu(self):
-        action = views['MainWindow'].settingsMenu.getActionByName('Float')
-        if action:
-            action.setText('Show float window')
-
-    def actionDock(self):
-        dockwindows = views['MainWindow'].dockwindows
-        for dock in dockwindows:
-            dock.setVisible(not dock.isVisible())
-
-        if dockwindows[0].isVisible():
-            self.sender().setText('Hide dock window')
-        else:
-            self.sender().setText('Show dock window')
-
-    def actionAndroidDeveloper(self):
-        logger.info("Android guide")
-
-    def actionIOSDeveloper(self):
-        logger.info("IOS guide")
-
-    def actionFordDeveloper(self):
-        url = "https://developer.ford.com"
-        QDesktopServices.openUrl(QUrl(url))
 
     def actionObjectView(self):
         from qframer import FGlobalSearchWidget
@@ -161,12 +111,13 @@ class GuiManger(QObject):
         self.aboutPage.animationShow()
 
     def actionExit(self):
-        if hasattr(self, 'exitPage'):
-            self.exitPage.hide()
-            self.exitPage.deleteLater()
-        self.exitPage = ExitPage(views['MainWindow'])
-        self.exitPage.exited.connect(self.close)
-        self.exitPage.animationShow()
+        # if hasattr(self, 'exitPage'):
+        #     self.exitPage.hide()
+        #     self.exitPage.deleteLater()
+        # self.exitPage = ExitPage(views['MainWindow'])
+        # self.exitPage.exited.connect(self.close)
+        # self.exitPage.animationShow()
+        self.close()
 
     def actionNotImplement(self):
         logger.info("actionNotImplement")
