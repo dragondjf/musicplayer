@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 MainWindow_Width = 800
-MainWindow_Height = 800
+MainWindow_Height = 600
 
 TitleBar_Height = 25
 LeftBar_Width = 60

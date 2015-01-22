@@ -45,12 +45,9 @@ class MainWindow(DMainWindow):
         self.setSystemTrayMenu(self.settingsMenu)
 
     def initSize(self):
-        mainwindow = windowsoptions['mainwindow']
         desktopWidth = QDesktopWidget().availableGeometry().width()
         desktopHeight = QDesktopWidget().availableGeometry().height()
-        self.resize(
-            desktopWidth * mainwindow['size'][0],
-            desktopHeight * mainwindow['size'][1])
+        self.resize(constants.MainWindow_Width, constants.MainWindow_Height)
         self.moveCenter()
 
     def initMenus(self):
