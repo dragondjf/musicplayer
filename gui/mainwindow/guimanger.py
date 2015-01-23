@@ -4,9 +4,9 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from qframer import views
-from gui.functionpages import LoginPage, AboutPage, ExitPage
+from gui.utils import views
 from database import signal_DB
+from .playcontroller import PlayController
 from log import logger
 
 
@@ -19,10 +19,11 @@ class GuiManger(QObject):
         self.parent = parent
         self.titleBarConnect()
         self.settingMenuActionConnect()
-        self.createControllers()
+        self.pageSwitchConnect()
+        self.initControllers()
 
     def titleBarConnect(self):
-        titleBar = views['MainWindow'].titleBar
+        titleBar = views['MainWindow'].musicTitleBar
         mainWindow = views['MainWindow']
         titleBar.settingMenuShowed.connect(
             titleBar.settingDownButton.showMenu)
@@ -41,8 +42,20 @@ class GuiManger(QObject):
                         getattr(self, 'actionNotImplement')
                     )
 
-    def createControllers(self):
-        pass
+    def pageSwitchConnect(self):
+        pageButtons = views['MusicLeftBar'].pageButtons
+        musicStackPage = views['MusicStackPage']
+        for button in pageButtons:
+            button.clicked.connect(self.swicthPage)
+
+    def swicthPage(self):
+        pageButtons = views['MusicLeftBar'].pageButtons
+        index = pageButtons.index(self.sender())
+        musicStackPage = views['MusicStackPage']
+        musicStackPage.setCurrentIndex(index)
+
+    def initControllers(self):
+        self.playController = PlayController()
 
     def switchWindow(self, flag):
         mainWindow = views['MainWindow']
@@ -104,11 +117,7 @@ class GuiManger(QObject):
                 print("root obj not found")
 
     def actionAbout(self):
-        if hasattr(self, 'aboutPage'):
-            self.aboutPage.hide()
-            self.aboutPage.deleteLater()
-        self.aboutPage = AboutPage(views['MainWindow'])
-        self.aboutPage.animationShow()
+        pass
 
     def actionExit(self):
         # if hasattr(self, 'exitPage'):

@@ -4,19 +4,15 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from qframer import views, collectView
-from qframer import FMainWindow
-from qframer import FSuspensionWidget
-from qframer import setSkinForApp
 
-from gui.uiconfig import windowsoptions
-from gui.menus import SettingsMenu, SkinMenu
-from gui.floatwindows import LogWindow, HistoryWindow
-from gui.floatwindows import InitHistoryWindow, FloatWindow
-from gui.functionpages import LeftBar, BottomBar
-from gui.dwidgets import DMainWindow, DTitleBar
+
+from ..menus import SettingsMenu, SkinMenu
+from ..functionpages import MusicLeftBar, MusicBottomBar, MusicStackPage
+from ..dwidgets import DMainWindow, DTitleBar
+from ..utils import collectView, setSkinForApp
 from .guimanger import GuiManger
-from gui.uiconfig import constants
+from ..uiconfig import constants
+import gui.uiconfig as uiconfig
 
 
 class MainWindow(DMainWindow):
@@ -31,65 +27,64 @@ class MainWindow(DMainWindow):
         self.guimanger = GuiManger()
 
     def initUI(self):
-        mainwindow = windowsoptions['mainwindow']
         self.initSize()
 
-        self.setWindowIcon(mainwindow['icon'])
-        self.setWindowTitle(mainwindow['title'])
+        self.setWindowIcon(uiconfig.windowIcon)
+        self.setWindowTitle(uiconfig.windowTitle)
 
         self.initMenus()
-
-        self.setCentralWidget(QLabel(self))
+        self.initCentralWidget()
 
         self.initSizeGrip()
         self.setSystemTrayMenu(self.settingsMenu)
 
     def initSize(self):
-        desktopWidth = QDesktopWidget().availableGeometry().width()
-        desktopHeight = QDesktopWidget().availableGeometry().height()
         self.resize(constants.MainWindow_Width, constants.MainWindow_Height)
         self.moveCenter()
 
     def initMenus(self):
         self.settingsMenu = SettingsMenu(self)
 
-    def initTitleBar(self):
-        self.titleBar = DTitleBar(self)
-        self.titleBar.settingDownButton.setMenu(self.settingsMenu)
-
-    def initLeftBar(self):
-        self.leftBar = LeftBar(self)
-
-    def initBottomBar(self):
-        self.bottomBar = BottomBar(self)
-
-    def setCentralWidget(self, widget):
-
+    def initCentralWidget(self):
         self.initTitleBar()
         self.initLeftBar()
+        self.initMusicStackPage()
         self.initBottomBar()
 
         centralWidget = QFrame(self)
 
         pageLayout = QVBoxLayout()
-        pageLayout.addWidget(self.titleBar)
-        pageLayout.addWidget(widget)
+        pageLayout.addWidget(self.musicTitleBar)
+        pageLayout.addWidget(self.musicStackPage)
         pageLayout.setContentsMargins(0, 0, 0, 0)
         pageLayout.setSpacing(0)
 
         controlLayout = QHBoxLayout()
-        controlLayout.addWidget(self.leftBar)
+        controlLayout.addWidget(self.musicLeftBar)
         controlLayout.addLayout(pageLayout)
         controlLayout.setContentsMargins(0, 0, 0, 0)
         controlLayout.setSpacing(0)
 
         mainLayout = QVBoxLayout()
         mainLayout.addLayout(controlLayout)
-        mainLayout.addWidget(self.bottomBar)
+        mainLayout.addWidget(self.musicBottomBar)
         mainLayout.setContentsMargins(0, 0, 0, 0)
         mainLayout.setSpacing(0)
         centralWidget.setLayout(mainLayout)
-        super(MainWindow, self).setCentralWidget(centralWidget)
+        self.setCentralWidget(centralWidget)
+
+    def initTitleBar(self):
+        self.musicTitleBar = DTitleBar(self)
+        self.musicTitleBar.settingDownButton.setMenu(self.settingsMenu)
+
+    def initLeftBar(self):
+        self.musicLeftBar = MusicLeftBar(self)
+
+    def initMusicStackPage(self):
+        self.musicStackPage = MusicStackPage(self)
+
+    def initBottomBar(self):
+        self.musicBottomBar = MusicBottomBar(self)
 
     def initSizeGrip(self):
         self.sizeGrip = QSizeGrip(self)

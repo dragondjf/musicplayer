@@ -202,7 +202,6 @@ QPushButton#checkable:disabled{
 QLabel{
     background-color: transparent;
     color: white;
-    qproperty-alignment: AlignCenter;
 }
 /********************QLabel********************************/
 
@@ -649,10 +648,118 @@ QToolButton#closeButton:pressed{
 }
 
 
-QFrame#leftBar{
+QToolButton#PreButton{
+    border-image: url(gui/skin/icons/dark/appbar.navigate.previous.png);
+    background-color: transparent;
+}
+
+QToolButton#PreButton:hover{
+    border-image: url(gui/skin/icons/light/appbar.navigate.previous.png);
+}
+
+QToolButton#PreButton:pressed{
+    border-image: url(gui/skin/icons/dark/appbar.navigate.previous.png);
+}
+
+QToolButton#PlayButton{
+    border-image: url(gui/skin/icons/dark/appbar.control.play.png);
+    background-color: transparent;
+}
+
+QToolButton#PlayButton:hover{
+    border-image: url(gui/skin/icons/light/appbar.control.play.png);
+}
+
+QToolButton#PlayButton:pressed{
+    border-image: url(gui/skin/icons/dark/appbar.control.play.png);
+}
+
+QToolButton#NextButton{
+    border-image: url(gui/skin/icons/dark/appbar.navigate.next.png);
+    background-color: transparent;
+}
+
+QToolButton#NextButton:hover{
+    border-image: url(gui/skin/icons/light/appbar.navigate.next.png);
+}
+
+QToolButton#NextButton:pressed{
+    border-image: url(gui/skin/icons/dark/appbar.navigate.next.png);
+}
+
+
+QToolButton#VolumeButton{
+    border-image: url(gui/skin/icons/dark/appbar.sound.3.png);
+    background-color: transparent;
+}
+
+QToolButton#VolumeButton:hover{
+    border-image: url(gui/skin/icons/light/appbar.sound.3.png);
+}
+
+QToolButton#VolumeButton:pressed{
+    border-image: url(gui/skin/icons/dark/appbar.sound.3.png);
+}
+
+
+QToolButton#PlayOrderButton{
+    border-image: url(gui/skin/icons/dark/appbar.refresh.png);
+    background-color: transparent;
+}
+
+QToolButton#PlayOrderButton:hover{
+    border-image: url(gui/skin/icons/light/appbar.refresh.png);
+}
+
+QToolButton#PlayOrderButton:pressed{
+    border-image: url(gui/skin/icons/dark/appbar.refresh.png);
+}
+
+QToolButton#LrcButton{
+    border-image: url(gui/skin/icons/dark/appbar.navigate.next.png);
+    background-color: transparent;
+}
+
+QToolButton#LrcButton:hover{
+    border-image: url(gui/skin/icons/light/appbar.navigate.next.png);
+}
+
+QToolButton#LrcButton:pressed{
+    border-image: url(gui/skin/icons/dark/appbar.navigate.next.png);
+}
+
+QToolButton#PlayListButton{
+    border-image: url(gui/skin/icons/dark/appbar.list.png);
+    background-color: transparent;
+}
+
+QToolButton#PlayListButton:hover{
+    border-image: url(gui/skin/icons/light/appbar.list.png);
+}
+
+QToolButton#PlayListButton:pressed{
+    border-image: url(gui/skin/icons/dark/appbar.list.png);
+}
+
+
+QFrame#MusicLeftBar{
     background-color: gray;
 }
 
-QFrame#bottomBar{
+QFrame#LocalMusicPage{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(11, 158, 12, 255), stop:0.5 rgba(150, 220, 120, 255), stop:1 rgba(11, 158, 12, 255));;
+}
+
+QFrame#PlayListPage{
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 82, 112, 255), stop:0.5 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));;
+}
+
+QFrame#DownLoadPage{
+    background-color: rgb(140, 147, 163);
+}
+
+QFrame#MusicBottomBar{
     background-color: rgb(40, 47, 63);
 }
+
+

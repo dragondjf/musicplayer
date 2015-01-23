@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-MainWindow_Width = 800
+MainWindow_Width = 905
 MainWindow_Height = 600
 
 TitleBar_Height = 25

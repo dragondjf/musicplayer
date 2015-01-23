@@ -4,41 +4,15 @@ import os
 import json
 
 
-__softwarename__ = 'PFramer'
+__softwarename__ = 'Deepin Music'
 __author__ = ""
 __url__ = ""
 __description__ = '''
-    This is a SoftwareFrame based on PySide.
+    This is a software based on PyQt5.
 '''
 __logoico__ = os.sep.join(['gui', 'skin', 'images', 'PFramer.png'])
-__version__ = '1.0.0'
+__version__ = '3.0.0'
 
 
-mainwindow = {
-    'title': __softwarename__,
-    'size': (0.6, 0.8),
-    'minsize': (0.4, 0.3),
-    'icon': __logoico__,
-    'maximizedflag': False,
-    'framelessflag': True,
-    'menubarflag': False,
-}
-
-logo_ico = __logoico__
-logo_img_url = os.sep.join(['gui', 'skin', 'images', 'PFramer.png'])
-logo_title = u''
-
-from .dialogconfig import dialogsettings
-from .frameqss import frameqss
-
-try:
-    with open(os.sep.join([os.getcwd(), 'options', 'windowsoptions.json']), 'r') as f:
-        windowsoptions = json.load(f)
-except:
-    windowsoptions = {
-        'mainwindow': mainwindow,
-        'splashimg': os.sep.join([os.getcwd(), 'gui', 'skin', 'images', 'splash.png']),
-        'splashflag': False,
-        'frameqss': frameqss
-    }
-    windowsoptions.update(dialogsettings)
+windowIcon = __logoico__
+windowTitle = u'Deepin Music'

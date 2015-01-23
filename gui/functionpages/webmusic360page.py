@@ -4,18 +4,19 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from qframer import collectView
-from qframer import FWebkitBasePage
+from ..dwidgets import DWebkitBasePage
+from gui.uiconfig import constants
+from ..utils import collectView
 
 
-class WebKitPage(FWebkitBasePage):
+class WebMusic360Page(DWebkitBasePage):
 
-    viewID = "WebKitPage"
+    viewID = 'WebMusic360Page'
 
     @collectView
     def __init__(self, parent=None):
-        super(WebKitPage, self).__init__(parent)
-        self.setObjectName("WebKitPage")
+        super(WebMusic360Page, self).__init__(parent)
+        self.setObjectName(self.viewID)
         self.parent = parent
         self.initData()
         self.initUI()
@@ -24,5 +25,5 @@ class WebKitPage(FWebkitBasePage):
         pass
 
     def initUI(self):
-        url = QUrl("http://www.baidu.com")
+        url = QUrl('http://10.0.0.153:8093/')
         self.view.load(url)

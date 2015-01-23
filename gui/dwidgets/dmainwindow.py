@@ -23,6 +23,7 @@ class DMainWindow(QMainWindow):
         self.isCusorLeftSide = False
         self.isCusorRightSide = False
         self.isCusorDownSide = False
+        self.isCusorBottomLeftSide = False
 
     def _initFlags(self):
         self._framelessflag = True  # 无系统边框标志
@@ -122,12 +123,12 @@ class DMainWindow(QMainWindow):
             h = max(self.minimumHeight(),
                     self.currentHeight + event.y() - self.rdragy)
             self.resize(w, h)
-        # elif self.isSideClicked and self.isCusorLeftSide:
-        #     x = event.x() + self.xPos - self.rdragx
-        #     w = max(self.minimumWidth(),
-        #             self.xPos + self.currentWidth - x)
-        #     self.move(x , self.yPos)
-        #     self.resize(w, self.currentHeight)
+        elif self.isSideClicked and self.isCusorBottomLeftSide:
+            w = max(self.minimumWidth(),
+                    self.currentWidth + event.x() - self.rdragx)
+            h = max(self.minimumHeight(),
+                    self.currentHeight + event.y() - self.rdragy)
+            self.resize(w, h)
         else:
             # 鼠标移动事件
             if self.isMaximized():
@@ -141,19 +142,22 @@ class DMainWindow(QMainWindow):
 
     def eventFilter(self, obj, event):
         if event.type() == QEvent.HoverMove:
-            if self.width() - event.pos().x() < 5:
+            if self.width() - event.pos().x() < 10 and self.height() - event.pos().y() > 10:
                 self.setCursor(Qt.SizeHorCursor)
                 self.isCusorRightSide = True
-            elif self.height() - event.pos().y() < 5:
+            elif self.height() - event.pos().y() < 10 and self.width() - event.pos().x() > 10:
                 self.setCursor(Qt.SizeVerCursor)
                 self.isCusorDownSide = True
-            # elif event.pos().x() < 5:
-            #     self.setCursor(Qt.SizeHorCursor)
-            #     self.isCusorLeftSide = True
+            elif self.width() - event.pos().x() <= 10 and self.height() - event.pos().y() <= 10:
+                self.setCursor(Qt.SizeFDiagCursor)
+                self.isCusorBottomLeftSide = True
+                self.isCusorRightSide = False
+                self.isCusorDownSide = False
             elif not self.isSideClicked:
                 self.setCursor(Qt.ArrowCursor)
                 self.isCusorLeftSide = False
                 self.isCusorRightSide = False
                 self.isCusorDownSide = False
+                self.isCusorBottomLeftSide = False
             return True
         return super(DMainWindow, self).eventFilter(obj, event)
