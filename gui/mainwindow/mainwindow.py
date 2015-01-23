@@ -56,7 +56,7 @@ class MainWindow(DMainWindow):
         pageLayout = QVBoxLayout()
         pageLayout.addWidget(self.musicTitleBar)
         pageLayout.addWidget(self.musicStackPage)
-        pageLayout.setContentsMargins(0, 0, 0, 0)
+        pageLayout.setContentsMargins(0, 0, 1, 0)
         pageLayout.setSpacing(0)
 
         controlLayout = QHBoxLayout()

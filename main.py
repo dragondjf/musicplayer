@@ -25,8 +25,8 @@ if __name__ == '__main__':
     mainwindow = MainWindow()
     mainwindow.show()
 
-    mainwindow.guimanger.globals = globals()
-    mainwindow.guimanger.locals = locals()
+    # mainwindow.guimanger.globals = globals()
+    # mainwindow.guimanger.locals = locals()
 
     exitCode = app.exec_()
     sys.exit(exitCode)
