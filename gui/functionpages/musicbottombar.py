@@ -37,22 +37,32 @@ class MusicBottomBar(QFrame):
     def initUI(self):
         self.setFixedHeight(constants.Bottom_Height)
 
+        self.musicSlider = QSlider(Qt.Horizontal, self)
+        self.musicSlider.setRange(0, 100)
+        self.musicSlider.setPageStep(5)
+        self.musicSlider.setSingleStep(1)
+        self.musicSlider.setFixedHeight(5)
         self.musicInfoFrame = MusicInfoFrame(self)
         self.musicPlayBar = MusicPlayBar(self)
         self.musicToolBar = MusicToolBar(self)
 
-        mainLayout = QHBoxLayout()
-        mainLayout.addSpacing(25)
-        mainLayout.addWidget(self.musicInfoFrame)
-        mainLayout.addStretch()
-        mainLayout.addWidget(self.musicPlayBar)
-        mainLayout.addStretch()
-        mainLayout.addWidget(self.musicToolBar)
-        mainLayout.addSpacing(25)
+        musicLayout = QHBoxLayout()
+        musicLayout.addSpacing(25)
+        musicLayout.addWidget(self.musicInfoFrame)
+        musicLayout.addStretch()
+        musicLayout.addWidget(self.musicPlayBar)
+        musicLayout.addStretch()
+        musicLayout.addWidget(self.musicToolBar)
+        musicLayout.addSpacing(25)
+        musicLayout.setContentsMargins(0, 0, 0, 0)
+        musicLayout.setSpacing(0)
+
+        mainLayout = QVBoxLayout()
+        mainLayout.addWidget(self.musicSlider)
+        mainLayout.addLayout(musicLayout)
         mainLayout.setContentsMargins(0, 0, 0, 0)
         mainLayout.setSpacing(0)
         self.setLayout(mainLayout)
-
 
 
 class CoverLabel(QLabel):
