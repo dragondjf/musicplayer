@@ -4,8 +4,8 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from gui.uiconfig import constants
-from ..utils import collectView
+from config import constants
+from gui.utils import collectView
 
 
 class LocalMusicPage(QFrame):

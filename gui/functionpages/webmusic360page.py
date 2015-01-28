@@ -4,9 +4,9 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from ..dwidgets import DWebkitBasePage
-from gui.uiconfig import constants
-from ..utils import collectView
+from gui.dwidgets import DWebkitBasePage
+from config import constants
+from gui.utils import collectView
 
 
 class WebMusic360Page(DWebkitBasePage):

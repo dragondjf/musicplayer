@@ -8,7 +8,7 @@ from .webmusic360page import WebMusic360Page
 from .localmusicpage import LocalMusicPage
 from .playlistpage import PlayListPage
 from .downloadpage import DownLoadPage
-from ..utils import collectView
+from gui.utils import collectView
 
 
 class MusicStackPage(QStackedWidget):

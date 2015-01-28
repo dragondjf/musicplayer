@@ -12,12 +12,9 @@ from PyQt5 import QtCore
 QtCore.Signal = QtCore.pyqtSignal
 QtCore.Slot = QtCore.pyqtSlot
 QtCore.Property = QtCore.pyqtProperty
-
-
-from gui import MainWindow
 from gui.dwidgets import QSingleApplication
-import gui.uiconfig as config
-from log import logger
+from app import DeepinPlayer
+import config
 
 
 if __name__ == '__main__':
@@ -25,19 +22,13 @@ if __name__ == '__main__':
         QApplication.addLibraryPath(
             '/usr/lib/%s-linux-gnu/qt5/plugins/' % platform.machine())
     app = QSingleApplication(config.applicationName, sys.argv)
-    app.setApplicationName(config.applicationName)
-    app.setApplicationVersion(config.applicationVersion)
-    app.setOrganizationName(config.organizationName)
 
     if app.isRunning():
         sys.exit(0)
 
-    mainwindow = MainWindow()
-    app.setActivationWindow(mainwindow)
-    mainwindow.show()
-
-    mainwindow.guimanger.globals = globals()
-    mainwindow.guimanger.locals = locals()
+    deepinPlayer = DeepinPlayer()
+    app.setActivationWindow(deepinPlayer.mainWindow)
+    deepinPlayer.show()
 
     exitCode = app.exec_()
     sys.exit(exitCode)
