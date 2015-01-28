@@ -138,7 +138,9 @@ class MusicInfoFrame(QFrame):
         cover = info['cover']
         title = info['title']
         artist = info['artist']
-        self.coverLabel.setPixmap(cover)
+        self.coverLabel.setStyleSheet('''
+            border-image: url(%s);
+            ''' % cover)
         self.titleLabel.setText(title)
         self.artistLabel.setText(artist)
 

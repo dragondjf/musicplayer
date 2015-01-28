@@ -8,20 +8,21 @@ from PyQt5.QtWidgets import *
 
 from ..menus import SettingsMenu, SkinMenu
 from ..functionpages import MusicLeftBar, MusicBottomBar, MusicStackPage
-from ..dwidgets import DMainWindow, DTitleBar
+from ..dwidgets import DMainWindow, DTitleBar, DMainFrame
 from ..utils import collectView, setSkinForApp
 from .guimanger import GuiManger
 from ..uiconfig import constants
 import gui.uiconfig as uiconfig
 
 
-class MainWindow(DMainWindow):
+class MainWindow(DMainFrame):
 
     viewID = "MainWindow"
 
     @collectView
     def __init__(self):
         super(MainWindow, self).__init__()
+        self.setObjectName(self.viewID)
         self.initUI()
         self.setskin()
         self.guimanger = GuiManger()

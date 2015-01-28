@@ -38,7 +38,7 @@ class QSingleApplication(QApplication):
             self._server = QLocalServer()
             self._server.listen(self._id)
             self._server.newConnection.connect(self._onNewConnection)
-            self.aboutToQuit.connect(self.removeServer)
+            # self.aboutToQuit.connect(self.removeServer)
 
     def handleError(self, msg):
         print(msg)
@@ -101,3 +101,7 @@ class QSingleApplication(QApplication):
     def removeServer(self):
         self._server.close()
         self._server.removeServer(self._id)
+
+    def quit(self):
+        # self.removeServer()
+        super(QSingleApplication, self).quit()
