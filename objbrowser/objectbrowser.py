@@ -115,6 +115,18 @@ class ObjectBrowser(FMainWindow):
 
         self.toggle_callable_action.toggle()
 
+        self.setskin('GBG')
+
+    def setskin(self, skinID="GBG"):
+        import os
+        qssfile =  os.path.join(os.path.abspath(os.path.dirname(__file__)), '%s.qss' % skinID)
+        if os.path.exists(qssfile):
+            fd = open(qssfile, "r")
+            style = fd.read()
+            fd.close()
+            self.setStyleSheet(style)
+        else:
+            self.setStyleSheet("")
 
     def initSize(self):
         desktopWidth = QDesktopWidget().availableGeometry().width()

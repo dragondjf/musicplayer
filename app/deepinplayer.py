@@ -26,6 +26,8 @@ class DeepinPlayer(object):
 
     def initView(self):
         self.mainWindow = MainWindow()
+        from objbrowser import browse
+        browse(self.mainWindow)
 
     def initControllers(self):
         self.guimanger = GuiManger()

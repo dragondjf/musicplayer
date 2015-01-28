@@ -20,7 +20,6 @@ class GuiManger(QObject):
     def __init__(self, parent=None):
         super(GuiManger, self).__init__()
         self.parent = parent
-
         self.initControllers()
         self.initGlobalConnect()
 
