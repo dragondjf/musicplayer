@@ -17,15 +17,6 @@ class PlayController(QObject):
         super(PlayController, self).__init__()
         self.parent = parent
         self.initConnect()
-        self.test()
 
     def initConnect(self):
         signal_DB.songInfo.connect(views['MusicInfoFrame'].updateContent)
-
-    def test(self):
-        info = {
-            'cover': 'gui/skin/images/bg2.jpg',
-            'title': 'dragon',
-            'artist': 'unknown'
-        }
-        signal_DB.songInfo.emit(info)

@@ -81,8 +81,9 @@ class DMainFrame(QFrame):
             qicon = icon
         super(DMainFrame, self).setWindowIcon(qicon)
 
-        self.systemTray.setIcon(qicon)
-        self.systemTray.show()
+        if hasattr(self, 'systemTray'):
+            self.systemTray.setIcon(qicon)
+            self.systemTray.show()
 
     def setWindowTitle(self, title):
         super(DMainFrame, self).setWindowTitle(title)

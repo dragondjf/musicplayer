@@ -7,6 +7,7 @@ from PyQt5.QtCore import *
 class SignalDB(QObject):
 
     closed = Signal()
+    backgroundimageChanged = Signal(unicode)
 
     songInfo = Signal(dict) 
 

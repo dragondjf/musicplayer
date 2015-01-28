@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from PyQt5.QtWidgets import *
-from gui import MainWindow
+from gui import MainWindow, SimpleWindow
 from controllers import GuiManger
 from log import logger
 import config
@@ -26,6 +26,14 @@ class DeepinPlayer(object):
 
     def initView(self):
         self.mainWindow = MainWindow()
+        self.simpleWindow = SimpleWindow()
+
+        from objbrowser import browse
+        a = {
+            '1' : 'dfdffd',
+            '2': 'fddffd'
+        }
+        browse(a)
 
     def initControllers(self):
         self.guimanger = GuiManger()

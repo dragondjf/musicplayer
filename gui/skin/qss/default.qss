@@ -15,7 +15,6 @@ QMainWindow{
 
 QFrame#MainWindow{
     background-color: white;
-    border-radius:5px;
 }
 
 /*********************QFrame****************************/

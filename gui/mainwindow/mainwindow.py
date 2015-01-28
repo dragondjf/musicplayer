@@ -110,25 +110,3 @@ class MainWindow(DMainFrame):
         super(MainWindow, self).resizeEvent(event)
         self.sizeGrip.move(
             self.size().width() - 100, self.size().height() - 30)
-
-    # def paintEvent(self, QPaintEvent):
-    #     from math import sqrt
-    #     rect = QRectF(10, 10, self.width()-20, self.height()-20)
-    #     path = QPainterPath()
-    #     path.setFillRule(Qt.WindingFill)
-    #     path.addRect(rect)
-
-    #     painter = QPainter(self)
-    #     painter.setRenderHint(QPainter.Antialiasing, True)
-    #     painter.drawRoundedRect(rect, 0, 0)
-    #     painter.fillPath(path, QBrush(Qt.white))
-
-    #     color = QColor(0, 0, 0, 40)
-    #     for i in range(10):
-    #         path = QPainterPath()
-    #         path.setFillRule(Qt.WindingFill)
-    #         path.addRect(10-i, 10-i, self.width()-(10-i)*2, self.height()-(10-i)*2)
-    #         alpha = 120-sqrt(i)*50 if 120-sqrt(i)*50 > 0 else 0
-    #         color.setAlpha(alpha)
-    #         painter.setPen(color)
-    #         painter.drawPath(path)
