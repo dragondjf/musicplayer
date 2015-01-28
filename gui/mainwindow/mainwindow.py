@@ -10,7 +10,6 @@ from gui.menus import SettingsMenu, SkinMenu
 from gui.functionpages import MusicLeftBar, MusicBottomBar, MusicStackPage
 from gui.dwidgets import DMainWindow, DTitleBar, DMainFrame
 from gui.utils import collectView, setSkinForApp
-from .guimanger import GuiManger
 from config import constants
 import config
 
@@ -25,7 +24,6 @@ class MainWindow(DMainFrame):
         self.setObjectName(self.viewID)
         self.initUI()
         self.setskin()
-        self.guimanger = GuiManger()
 
     def initUI(self):
         self.initSize()
