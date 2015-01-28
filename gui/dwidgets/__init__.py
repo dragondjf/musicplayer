@@ -3,6 +3,6 @@
 
 from .dsingleapplication import QSingleApplication
 from .dmainwindow import DMainWindow
-from .dmainframe import DMainFrame, DRadiusMainFrame
+from .dmainframe import DMainFrame
 from .dtitlebar import DTitleBar
 from .dwebkitpage import DWebkitBasePage
