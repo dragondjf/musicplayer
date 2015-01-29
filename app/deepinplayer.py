@@ -28,12 +28,12 @@ class DeepinPlayer(object):
         self.mainWindow = MainWindow()
         self.simpleWindow = SimpleWindow()
 
-        from objbrowser import browse
-        a = {
-            '1' : 'dfdffd',
-            '2': 'fddffd'
-        }
-        browse(a)
+        # from objbrowser import browse
+        # a = {
+        #     '1' : 'dfdffd',
+        #     '2': 'fddffd'
+        # }
+        # browse(a)
 
     def initControllers(self):
         self.guimanger = GuiManger()

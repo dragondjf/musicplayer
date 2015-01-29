@@ -12,6 +12,9 @@ from PyQt5 import QtCore
 QtCore.Signal = QtCore.pyqtSignal
 QtCore.Slot = QtCore.pyqtSlot
 QtCore.Property = QtCore.pyqtProperty
+if os.name == 'posix':
+    QCoreApplication.setAttribute(QtCore.Qt.AA_X11InitThreads, True)
+
 from gui.dwidgets import QSingleApplication
 from app import DeepinPlayer
 import config

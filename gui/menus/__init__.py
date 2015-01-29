@@ -1,3 +1,3 @@
 
 from .settingsmenu import SettingsMenu
-from .skinmenu import SkinMenu
+from .classifymenu import ClassifyMenu

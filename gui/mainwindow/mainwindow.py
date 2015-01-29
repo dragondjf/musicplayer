@@ -6,9 +6,9 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 
-from gui.menus import SettingsMenu, SkinMenu
-from gui.functionpages import MusicLeftBar, MusicBottomBar, MusicStackPage
-from gui.dwidgets import DMainWindow, DTitleBar, DMainFrame
+from gui.menus import SettingsMenu
+from gui.functionpages import MainTitleBar, MusicLeftBar, MusicBottomBar, MusicStackPage
+from gui.dwidgets import DMainWindow, DMainFrame
 from gui.utils import collectView, setSkinForApp
 from config import constants
 import config
@@ -53,7 +53,7 @@ class MainWindow(DMainFrame):
         centralWidget = QFrame(self)
 
         pageLayout = QVBoxLayout()
-        pageLayout.addWidget(self.musicTitleBar)
+        pageLayout.addWidget(self.mainTitleBar)
         pageLayout.addWidget(self.musicStackPage)
         pageLayout.setContentsMargins(0, 0, 1, 0)
         pageLayout.setSpacing(0)
@@ -73,8 +73,8 @@ class MainWindow(DMainFrame):
         self.setCentralWidget(centralWidget)
 
     def initTitleBar(self):
-        self.musicTitleBar = DTitleBar(self)
-        self.musicTitleBar.settingDownButton.setMenu(self.settingsMenu)
+        self.mainTitleBar = MainTitleBar(self)
+        self.mainTitleBar.settingDownButton.setMenu(self.settingsMenu)
 
     def initLeftBar(self):
         self.musicLeftBar = MusicLeftBar(self)

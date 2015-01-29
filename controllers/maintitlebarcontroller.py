@@ -9,20 +9,21 @@ from database import signal_DB
 from log import logger
 
 
-class TitleBarController(QObject):
+class MainTitleBarController(QObject):
 
-    """docstring for TitleBarController"""
+    """docstring for MainTitleBarController"""
 
     def __init__(self, parent=None):
-        super(TitleBarController, self).__init__()
+        super(MainTitleBarController, self).__init__()
         self.parent = parent
         self.initConnect()
 
     def initConnect(self):
-        titleBar = views['MainWindow'].musicTitleBar
+        titleBar = views['MainWindow'].mainTitleBar
         mainWindow = views['MainWindow']
         titleBar.settingMenuShowed.connect(
             titleBar.settingDownButton.showMenu)
+        titleBar.modeChanged.connect(signal_DB.modeChanged)
         titleBar.minimized.connect(mainWindow.showMinimized)
         titleBar.maximized.connect(self.switchWindow)
         titleBar.closed.connect(signal_DB.closed)

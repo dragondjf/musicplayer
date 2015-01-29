@@ -8,6 +8,7 @@ class SignalDB(QObject):
 
     closed = Signal()
     backgroundimageChanged = Signal(unicode)
+    modeChanged = Signal(str)
 
     songInfo = Signal(dict) 
 

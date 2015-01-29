@@ -1,12 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from qframer.resources import *
-from qframer import views
-from qframer import FMenu
+
+from gui.dwidgets import DMenu
 
 
-class SettingsMenu(FMenu):
+class SettingsMenu(DMenu):
 
     """docstring for SettingsMenu"""
 

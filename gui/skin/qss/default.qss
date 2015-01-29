@@ -17,6 +17,10 @@ QFrame#MainWindow{
     background-color: white;
 }
 
+QFrame#SimpleWindow{
+    background-color: gray;
+}
+
 /*********************QFrame****************************/
 QFrame#FloatWidget{
     background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:1, fx:0.5, fy:0.5, stop:0 rgba(119, 255, 255, 255), stop:1 rgba(32, 127, 155, 255));
@@ -150,7 +154,7 @@ QMenu::indicator {
 
 /*******************QPushButton***************************/
 
-/*QPushButton{
+QPushButton{
     background-color: rgb(40, 47, 63);
     border: none;
     color: white;
@@ -162,7 +166,7 @@ QPushButton:hover{
 }
 
 QPushButton:pressed{
-    background-color: rgba(0, 82, 112, 255);
+    border: none;
     color: white;
 }
 
@@ -195,7 +199,7 @@ QPushButton#checkable:pressed{
 
 QPushButton#checkable:disabled{
     background-color: gray;
-}*/
+}
 
 /********************QPushButton***************************/
 
@@ -463,9 +467,9 @@ QTableWidget{
     /*border: 1px solid #485260;*/
     border: none;
     color: white;
-    background-color: #5B677A;
-    selection-color: white;
-    selection-background-color:rgb(63, 147, 168);
+    background-color: transparent;
+    selection-color: transparent;
+    selection-background-color:transparent;
 }
 
 QTableWidget:disabled{
@@ -593,6 +597,20 @@ QToolButton#fullModeButton:hover{
 QToolButton#fullModeButton:pressed{
     border-image: url(gui/skin/dui/menu_press.png);
 }
+
+QToolButton#simpleModeButton{
+    border-image: url(gui/skin/dui/menu_normal.png);
+    background-color: transparent;
+}
+
+QToolButton#simpleModeButton:hover{
+    border-image: url(gui/skin/dui/menu_hover.png);
+}
+
+QToolButton#simpleModeButton:pressed{
+    border-image: url(gui/skin/dui/menu_press.png);
+}
+
 
 QToolButton#minButton{
     border-image: url(gui/skin/dui/minimise_normal.png);
@@ -750,7 +768,7 @@ QFrame#MusicLeftBar{
 }
 
 QFrame#LocalMusicPage{
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(11, 158, 12, 255), stop:0.5 rgba(150, 220, 120, 255), stop:1 rgba(11, 158, 12, 255));;
+    background-color: transparent;
 }
 
 QFrame#PlayListPage{
@@ -766,12 +784,12 @@ QFrame#MusicBottomBar{
 }
 
 
-QSlider::groove:horizontal {
+/*QSlider::groove:horizontal {
     border: 1px solid #999999;
-    height: 8px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */
+    height: 8px; 
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #B1B1B1, stop:1 #c4c4c4);
     margin: 2px 0;
-}
+}*/
 
 
 QSlider::handle:horizontal {

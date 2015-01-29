@@ -28,16 +28,16 @@ class BaseToolButton(QToolButton):
             self.update()
 
 
-class DTitleBar(QFrame):
+class MainTitleBar(QFrame):
 
     settingMenuShowed = Signal()
-    modeChanged = Signal(bool)
+    modeChanged = Signal(str)
     minimized = Signal()
     maximized = Signal(bool)
     closed = Signal()
 
     def __init__(self, parent=None):
-        super(DTitleBar, self).__init__(parent)
+        super(MainTitleBar, self).__init__(parent)
         self.initData()
         self.initUI()
 
@@ -47,11 +47,6 @@ class DTitleBar(QFrame):
 
     def initUI(self):
         self.setFixedHeight(baseHeight)
-
-        self.logoButton = BaseToolButton()
-        self.logoButton.setObjectName("logoButton")
-
-        self.titleLabel = QLabel()
 
         self.settingDownButton = BaseToolButton()
         self.settingDownButton.setObjectName("settingDownButton")
@@ -69,9 +64,6 @@ class DTitleBar(QFrame):
         self.closeButton.setObjectName("closeButton")
 
         mainLayout = QHBoxLayout()
-        mainLayout.addWidget(self.logoButton)
-        mainLayout.addSpacing(5)
-        mainLayout.addWidget(self.titleLabel)
         mainLayout.addStretch()
         mainLayout.addWidget(self.settingDownButton)
         mainLayout.addWidget(self.modeButton)
@@ -83,18 +75,13 @@ class DTitleBar(QFrame):
         self.setLayout(mainLayout)
 
         self.settingDownButton.clicked.connect(self.settingMenuShowed)
-        self.modeButton.clicked.connect(self.swithMode)
+        self.modeButton.clicked.connect(self.changeMode)
         self.minButton.clicked.connect(self.minimized)
         self.maxButton.clicked.connect(self.swicthMax)
         self.closeButton.clicked.connect(self.closed)
 
-    def swithMode(self):
-        if self.mode_flag:
-            self.modeButton.setObjectName("simpleModeButton")
-        else:
-            self.modeButton.setObjectName("fullModeButton")
-        self.mode_flag = not self.mode_flag
-        self.modeChanged.emit(self.mode_flag)
+    def changeMode(self):
+        self.modeChanged.emit('simple')
 
     def swicthMax(self):
         if self.max_flag:

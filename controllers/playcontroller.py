@@ -19,4 +19,5 @@ class PlayController(QObject):
         self.initConnect()
 
     def initConnect(self):
-        signal_DB.songInfo.connect(views['MusicInfoFrame'].updateContent)
+        signal_DB.songInfo.connect(views['MusicBottomBar'].musicInfoFrame.updateContent)
+        signal_DB.songInfo.connect(views['SimpleMusicBottomBar'].musicInfoFrame.updateContent)

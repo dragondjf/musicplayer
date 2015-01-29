@@ -65,11 +65,56 @@ class MusicBottomBar(QFrame):
         self.setLayout(mainLayout)
 
 
-class CoverLabel(QLabel):
+class SimpleMusicBottomBar(QFrame):
 
-    viewID = 'CoverLabel'
+    viewID = 'SimpleMusicBottomBar'
 
     @collectView
+    def __init__(self, parent=None):
+        super(SimpleMusicBottomBar, self).__init__(parent)
+        self.setObjectName(self.viewID)
+        self.initData()
+        self.initUI()
+
+    def initData(self):
+        BaseToolButton.w = 40
+        BaseToolButton.h = 40
+
+    def initUI(self):
+        self.setFixedHeight(constants.Simple_Bottom_Height)
+
+        self.musicSlider = QSlider(Qt.Horizontal, self)
+        self.musicSlider.setRange(0, 100)
+        self.musicSlider.setPageStep(5)
+        self.musicSlider.setSingleStep(1)
+        self.musicSlider.setFixedHeight(5)
+        self.musicInfoFrame = MusicInfoFrame(self)
+        self.musicInfoFrame.setFixedHeight(100)
+        self.musicPlayBar = MusicPlayBar(self)
+        self.musicToolBar = MusicToolBar(self)
+
+        musicLayout = QHBoxLayout()
+        musicLayout.addStretch()
+        musicLayout.addWidget(self.musicPlayBar)
+        musicLayout.addStretch()
+        musicLayout.addWidget(self.musicToolBar)
+        musicLayout.addStretch()
+        musicLayout.setContentsMargins(0, 0, 0, 0)
+        musicLayout.setSpacing(0)
+
+        mainLayout = QVBoxLayout()
+        mainLayout.addWidget(self.musicInfoFrame)
+        mainLayout.addWidget(self.musicSlider)
+        mainLayout.addLayout(musicLayout)
+        mainLayout.setContentsMargins(20, 0, 20, 0)
+        mainLayout.setSpacing(0)
+        self.setLayout(mainLayout)
+
+
+
+class CoverLabel(QLabel):
+
+
     def __init__(self, parent=None):
         super(CoverLabel, self).__init__(parent)
 
@@ -84,9 +129,7 @@ class CoverLabel(QLabel):
 
 class MusicInfoFrame(QFrame):
 
-    viewID = 'MusicInfoFrame'
 
-    @collectView
     def __init__(self, parent=None):
         super(MusicInfoFrame, self).__init__(parent)
         self.initData()
@@ -96,10 +139,9 @@ class MusicInfoFrame(QFrame):
         pass
 
     def initUI(self):
-        self.setFixedWidth(300)
 
         self.coverLabel = CoverLabel(self)
-        self.coverLabel.setFixedWidth(60)
+        self.coverLabel.setFixedSize(60, 60)
 
         self.titleLabel = QLabel(self)
         self.titleLabel.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
@@ -147,9 +189,6 @@ class MusicInfoFrame(QFrame):
 
 class MusicPlayBar(QFrame):
 
-    viewID = 'MusicPlayBar'
-
-    @collectView
     def __init__(self, parent=None):
         super(MusicPlayBar, self).__init__(parent)
         self.initData()
@@ -187,9 +226,6 @@ class MusicPlayBar(QFrame):
 
 class MusicToolBar(QFrame):
 
-    viewID = 'MusicToolBar'
-
-    @collectView
     def __init__(self, parent=None):
         super(MusicToolBar, self).__init__(parent)
         self.initData()
@@ -199,8 +235,6 @@ class MusicToolBar(QFrame):
         pass
 
     def initUI(self):
-
-        self.setFixedWidth(300)
 
         self.volumeButton = BaseToolButton()
         self.volumeButton.setObjectName('VolumeButton')
